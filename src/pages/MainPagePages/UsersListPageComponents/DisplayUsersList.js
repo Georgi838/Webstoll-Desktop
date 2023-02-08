@@ -32,7 +32,7 @@ export default function DisplayUsersList({
   const [priceToday, setPriceToday] = useState();
   const [priceYesterday, setPriceYesterday] = useState();
   const [usersInfo, setUsersInfo] = useState([]);
-  const [usersClass, setUsersClass] = useState(3);
+  const [usersClass, setUsersClass] = useState(1);
 
   useEffect(() => {
     getUsers();
@@ -80,9 +80,9 @@ export default function DisplayUsersList({
 
   function EatOrNotForDisplayUsers({ eatTrueOrFalse }) {
     if (eatTrueOrFalse) {
-      return <p className="student-div-middle">Ще яде!</p>;
+      return <p className="student-div-middle">Записан/а</p>;
     } else {
-      return <p className="student-div-middle">Няма да яде!</p>;
+      return <p className="student-div-middle">Не е записан/а</p>;
     }
   }
 
@@ -102,40 +102,51 @@ export default function DisplayUsersList({
 
             <EatOrNotForDisplayUsers eatTrueOrFalse={item.EatTrueFalse} />
 
+         
             <div className="student-div-middle-2">
-              <button className="btn" onClick={ButtonYES(item)}>
+              <button className="btn shadow-none" onClick={ButtonYES(item)}>
                 Да
               </button>
-              <button className="btn" onClick={ButtonNO(item)}>
+              <button className="btn shadow-none" onClick={ButtonNO(item)}>
                 Не
               </button>
             </div>
 
             <div className='student-div-middle-3'>
-                    <button className="btn" onClick={ButtonYES_PLUS(item)}>+1</button>
+                  {/* <p className="student-div-middle-title">Добави?</p> */}
+                    <button className="btn shadow-none" onClick={ButtonYES_PLUS(item)}>+</button>
+                    <button className="btn shadow-none" onClick={ButtonNO_MINUS(item)}>-</button>
             </div>
 
             <div className="student-div-middle-4">
-              <p>{(item.PriceDueThisMont).toFixed(2)}</p>
+            <p className="student-div-middle-title">Този месец:</p>
+              <p>{(item.PriceDueThisMont).toFixed(2)}лв.</p>
             </div>
 
             <div className="student-div-middle-4">
-              <p>{item.EatTimesThisMonth}</p>
+            <p className="student-div-middle-title">Ял/а до сега:</p>
+            {item.EatTimesThisMonth === 1 ? (
+               <p> {item.EatTimesThisMonth} път</p>
+            ): (
+
+              <p>{item.EatTimesThisMonth} пъти</p>
+            )}
             </div>
 
             <div className="student-div-middle-5">
+            <p className="student-div-middle-title">Дължи общо:</p>
               {item.PricePaid === true ? (
-                <p className="price-paid">{(item.PriceMustPay).toFixed(2)}</p>
+                <p className="price-paid">{(item.PriceMustPay).toFixed(2)}лв.</p>
               ) : (
-                <p className="price-not-paid">{(item.PriceMustPay).toFixed(2)}</p>
+                <p className="price-not-paid">{(item.PriceMustPay).toFixed(2)}лв.</p>
               )}
             </div>
 
             <div className="student-div-right">
-              <button className="btn" onClick={ButtonPaid(item)}>
+              <button className="btn shadow-none" onClick={ButtonPaid(item)}>
                 Платено
               </button>
-              <button className="btn" onClick={ButtonNotPaid(item)}>
+              <button className="btn shadow-none" onClick={ButtonNotPaid(item)}>
                 Неплатено
               </button>
             </div>
